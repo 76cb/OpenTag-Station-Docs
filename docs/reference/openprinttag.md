@@ -10,7 +10,7 @@ See the release checklist for outstanding physical checks.
 Host hardening now exercises every truncated prefix and every single-byte
 mutation of the official fixture in addition to the bounded CBOR/NDEF/NFC-V
 tests. ST25R3916B wiring, RFAL binding, RF behavior, and real-tag read/write
-remain UNVERIFIED in [release-validation.md](https://github.com/76cb/OpenTag-Station/blob/313961068216d24e8a2a977cebddef2d7a2f160a/docs/release-validation.md).
+remain UNVERIFIED in [release-validation.md](https://github.com/76cb/OpenTag-Station/blob/58c458ba078c109fea88cd12f7a797bdb3f1f3a5/docs/release-validation.md).
 
 ## Authority
 

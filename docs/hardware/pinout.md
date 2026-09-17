@@ -24,8 +24,8 @@ checks, use [wiring](wiring.md); do not interpret it as a cable-side left/right 
 | NFC | Address `0x50`, `Wire1` controller 1, 100 kHz |
 
 Firmware authority:
-[`wt32_sc01_plus_rev_a.hpp`](https://github.com/76cb/OpenTag-Station/blob/313961068216d24e8a2a977cebddef2d7a2f160a/src/boards/wt32_sc01_plus_rev_a.hpp),
-[`nau7802_device.hpp`](https://github.com/76cb/OpenTag-Station/blob/313961068216d24e8a2a977cebddef2d7a2f160a/src/hardware/scale/nau7802_device.hpp),
+[`wt32_sc01_plus_rev_a.hpp`](https://github.com/76cb/OpenTag-Station/blob/58c458ba078c109fea88cd12f7a797bdb3f1f3a5/src/boards/wt32_sc01_plus_rev_a.hpp),
+[`nau7802_device.hpp`](https://github.com/76cb/OpenTag-Station/blob/58c458ba078c109fea88cd12f7a797bdb3f1f3a5/src/hardware/scale/nau7802_device.hpp),
 and the production Wire/Wire1 bindings. EXT contact numbering follows the
 [manufacturer datasheet](https://docs.makehub.tw/wt32-sc01plus/WT32-SC01%2BPLUS%2BDatasheet-V1.5%2BEN.pdf).
 

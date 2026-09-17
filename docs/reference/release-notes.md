@@ -27,4 +27,4 @@ acceptance remains required. See [the release checklist](../contributing/release
 
 ## Development history
 
-Earlier milestones are preserved in [the historical changelog](https://github.com/76cb/OpenTag-Station/blob/313961068216d24e8a2a977cebddef2d7a2f160a/docs/history/changelog-before-1.0.md).
+Earlier milestones are preserved in [the historical changelog](https://github.com/76cb/OpenTag-Station/blob/58c458ba078c109fea88cd12f7a797bdb3f1f3a5/docs/history/changelog-before-1.0.md).

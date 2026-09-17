@@ -10,7 +10,7 @@ See the release checklist for outstanding physical checks.
 The release audit rechecked zero-based T1-T5 translation, printer revisions,
 spool generations, expiry, non-replayed mutation, and exact readback. Live
 read-only discovery passed on v1.2.1; physical assignment and outage recovery remain in
-[release-validation.md](https://github.com/76cb/OpenTag-Station/blob/313961068216d24e8a2a977cebddef2d7a2f160a/docs/release-validation.md).
+[release-validation.md](https://github.com/76cb/OpenTag-Station/blob/58c458ba078c109fea88cd12f7a797bdb3f1f3a5/docs/release-validation.md).
 
 ## Baseline
 

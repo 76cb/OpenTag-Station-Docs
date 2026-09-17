@@ -11,7 +11,7 @@ The default/current physical target remains YZC-133 5 kg and the YZC-133 2 kg
 profile remains supported. The release audit found no basis for an accuracy
 claim; the required wiring, stability, tare, calibration, repeatability, drift,
 position, noise, and overload procedure is in
-[release-validation.md](https://github.com/76cb/OpenTag-Station/blob/313961068216d24e8a2a977cebddef2d7a2f160a/docs/release-validation.md).
+[release-validation.md](https://github.com/76cb/OpenTag-Station/blob/58c458ba078c109fea88cd12f7a797bdb3f1f3a5/docs/release-validation.md).
 
 ## Hardware boundary
 

@@ -10,7 +10,7 @@ See the release checklist for outstanding physical checks.
 The release audit rechecked bounded transport, malformed/missing responses,
 capability degradation, identity generations, idempotency, and guarded exact
 readback. Live pinned-instance behavior and outage recovery remain UNVERIFIED in
-[release-validation.md](https://github.com/76cb/OpenTag-Station/blob/313961068216d24e8a2a977cebddef2d7a2f160a/docs/release-validation.md).
+[release-validation.md](https://github.com/76cb/OpenTag-Station/blob/58c458ba078c109fea88cd12f7a797bdb3f1f3a5/docs/release-validation.md).
 
 ## Baseline
 
@@ -95,4 +95,4 @@ A live/containerized Spoolman instance is still required for integration signoff
 
 ## Production OpenPrintTag writer
 
-See [writer workflow and contract](https://github.com/76cb/OpenTag-Station/blob/313961068216d24e8a2a977cebddef2d7a2f160a/docs/openprinttag-writer.md). GET /api/v1/tag-writer returns its bounded snapshot; authenticated POST enqueues only approved high-level catalog/import/spool/preview/write/association operations. Periodic reads never write.
+See [writer workflow and contract](https://github.com/76cb/OpenTag-Station/blob/58c458ba078c109fea88cd12f7a797bdb3f1f3a5/docs/openprinttag-writer.md). GET /api/v1/tag-writer returns its bounded snapshot; authenticated POST enqueues only approved high-level catalog/import/spool/preview/write/association operations. Periodic reads never write.

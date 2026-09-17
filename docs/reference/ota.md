@@ -7,7 +7,7 @@ See the release checklist for outstanding physical checks.
 
 The authenticated local A/B updater documented here is the normal update path
 after OpenTag Station is running. The separate HTTPS
-[browser flasher](https://github.com/76cb/OpenTag-Station/blob/313961068216d24e8a2a977cebddef2d7a2f160a/docs/web-flasher.md) installs or recovers a complete serial factory
+[browser flasher](https://github.com/76cb/OpenTag-Station/blob/58c458ba078c109fea88cd12f7a797bdb3f1f3a5/docs/web-flasher.md) installs or recovers a complete serial factory
 image over USB; it is not an OTA replacement and may erase configuration or
 calibration.
 
@@ -17,7 +17,7 @@ Phase 11 re-audits OTA ownership, upload bounds, lifecycle exclusion, durable
 write order, first-use metadata recovery, and every activation/candidate power
 cut boundary. The complete A/B, rollback, interruption, browser-reconnect, and
 resource matrix remains UNVERIFIED in
-[release-validation.md](https://github.com/76cb/OpenTag-Station/blob/313961068216d24e8a2a977cebddef2d7a2f160a/docs/release-validation.md).
+[release-validation.md](https://github.com/76cb/OpenTag-Station/blob/58c458ba078c109fea88cd12f7a797bdb3f1f3a5/docs/release-validation.md).
 
 ## Phase 10 boundary and validation levels
 
