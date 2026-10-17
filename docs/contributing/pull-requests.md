@@ -2,7 +2,7 @@
 
 How to prepare a change: what CI checks, and what the project expects by convention.
 The project is licensed under the PolyForm Noncommercial License 1.0.0
-([LICENSE.md](https://github.com/76cb/OpenTag-Station/blob/02a08697ec48765317b6955af2108e8385749982/LICENSE.md)).
+([LICENSE.md](https://github.com/76cb/OpenTag-Station/blob/86ff2fd7a6f2717cdaeb40807cde1b0618378b29/LICENSE.md)).
 
 ## Where things live
 
@@ -71,7 +71,7 @@ with demo data. Each one is recorded with a hash of the sources it was made from
 `tools/check_committed_images.py` fails in CI when a source changed but the images did not.
 
 The sources are the `SOURCES` list in
-[`tools/curate_public_images.py`](https://github.com/76cb/OpenTag-Station/blob/02a08697ec48765317b6955af2108e8385749982/tools/curate_public_images.py).
+[`tools/curate_public_images.py`](https://github.com/76cb/OpenTag-Station/blob/86ff2fd7a6f2717cdaeb40807cde1b0618378b29/tools/curate_public_images.py).
 If your change touches one of them, regenerate the images:
 
 ```sh

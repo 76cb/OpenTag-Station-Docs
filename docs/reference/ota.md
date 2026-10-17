@@ -19,7 +19,7 @@ does when the new firmware does not come up. Steps for doing an update:
 ## Flash layout
 
 16 MiB flash, from
-[`partitions.csv`](https://github.com/76cb/OpenTag-Station/blob/02a08697ec48765317b6955af2108e8385749982/partitions.csv):
+[`partitions.csv`](https://github.com/76cb/OpenTag-Station/blob/86ff2fd7a6f2717cdaeb40807cde1b0618378b29/partitions.csv):
 
 | Partition | Offset | Size | Holds |
 |---|---|---:|---|
@@ -97,7 +97,7 @@ Not required: Wi-Fi being connected, Spoolman or FilaBridge being reachable, the
 |---|---|
 | All requirements met at 30 seconds | The firmware is confirmed (`confirmed`). Rollback is no longer possible. |
 | A requirement is missing at 30 seconds, or start-up reports a fatal error | The image is marked invalid and the station restarts into the previous firmware (`rolled_back`). |
-| The new firmware crashes or is reset before it is confirmed | Intended: the ESP-IDF bootloader's app rollback starts the previous firmware, and the station then reports `rolled_back`. No automated test covers the bootloader step; step 31 of the hardware acceptance in [docs/releasing.md](https://github.com/76cb/OpenTag-Station/blob/02a08697ec48765317b6955af2108e8385749982/docs/releasing.md#hardware-acceptance) checks it. |
+| The new firmware crashes or is reset before it is confirmed | Intended: the ESP-IDF bootloader's app rollback starts the previous firmware, and the station then reports `rolled_back`. No automated test covers the bootloader step; step 31 of the hardware acceptance in [docs/releasing.md](https://github.com/76cb/OpenTag-Station/blob/86ff2fd7a6f2717cdaeb40807cde1b0618378b29/docs/releasing.md#hardware-acceptance) checks it. |
 | A factory reset is waiting to finish | The reset completes first; the health decision waits for it. |
 
 ## Interruptions
@@ -134,5 +134,5 @@ station is back; the receipt of the restart request is not proof that the update
 | Settings are suspect after recovery | [Factory reset and USB recovery](../troubleshooting/recovery.md) |
 
 How release images and the installer are built:
-[releasing.md](https://github.com/76cb/OpenTag-Station/blob/02a08697ec48765317b6955af2108e8385749982/docs/releasing.md),
-[web-flasher.md](https://github.com/76cb/OpenTag-Station/blob/02a08697ec48765317b6955af2108e8385749982/docs/web-flasher.md).
+[releasing.md](https://github.com/76cb/OpenTag-Station/blob/86ff2fd7a6f2717cdaeb40807cde1b0618378b29/docs/releasing.md),
+[web-flasher.md](https://github.com/76cb/OpenTag-Station/blob/86ff2fd7a6f2717cdaeb40807cde1b0618378b29/docs/web-flasher.md).
