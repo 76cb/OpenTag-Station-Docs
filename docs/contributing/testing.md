@@ -2,7 +2,7 @@
 
 What runs on every pull request and on `main`, and how to run the same checks yourself.
 The workflow is
-[`.github/workflows/ci.yml`](https://github.com/76cb/OpenTag-Station/blob/02a08697ec48765317b6955af2108e8385749982/.github/workflows/ci.yml).
+[`.github/workflows/ci.yml`](https://github.com/76cb/OpenTag-Station/blob/86ff2fd7a6f2717cdaeb40807cde1b0618378b29/.github/workflows/ci.yml).
 Set up the tools first: [Build from source](build.md).
 
 ## Test environments
@@ -118,4 +118,4 @@ running station. These need a real station:
 - Free memory and stack use over hours of operation.
 
 The script for these checks is the "Hardware acceptance" section of
-[docs/releasing.md](https://github.com/76cb/OpenTag-Station/blob/02a08697ec48765317b6955af2108e8385749982/docs/releasing.md).
+[docs/releasing.md](https://github.com/76cb/OpenTag-Station/blob/86ff2fd7a6f2717cdaeb40807cde1b0618378b29/docs/releasing.md).

@@ -99,7 +99,7 @@ Touchscreen: **Settings → About / Advanced**. Browser: **Settings → Advanced
 **Is it open source?**
 The source is public under the PolyForm Noncommercial License 1.0.0. You may build and use it
 for noncommercial purposes. See
-[LICENSE.md](https://github.com/76cb/OpenTag-Station/blob/02a08697ec48765317b6955af2108e8385749982/LICENSE.md).
+[LICENSE.md](https://github.com/76cb/OpenTag-Station/blob/86ff2fd7a6f2717cdaeb40807cde1b0618378b29/LICENSE.md).
 
 **Where are the release files?**
 Releases are published on the [GitHub Releases page](https://github.com/76cb/OpenTag-Station/releases).

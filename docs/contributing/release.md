@@ -3,7 +3,7 @@
 A release is made by merging a version change to `main`. GitHub Actions builds, checks and
 publishes it, then updates the USB installer from the same files.
 The full checklist, including the tests on real hardware, is in
-[docs/releasing.md](https://github.com/76cb/OpenTag-Station/blob/02a08697ec48765317b6955af2108e8385749982/docs/releasing.md).
+[docs/releasing.md](https://github.com/76cb/OpenTag-Station/blob/86ff2fd7a6f2717cdaeb40807cde1b0618378b29/docs/releasing.md).
 
 The candidate is `1.0.0`.
 
