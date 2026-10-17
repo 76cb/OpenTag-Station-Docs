@@ -1,59 +1,55 @@
 # Release process
 
-This technical reference describes implementation contracts. Dated test figures
-below are historical checkpoints, not the current candidate’s acceptance record.
-See the release checklist for outstanding physical checks.
+A release is made by merging a version change to `main`. GitHub Actions builds, checks and
+publishes it, then updates the USB installer from the same files.
+The full checklist, including the tests on real hardware, is in
+[docs/releasing.md](https://github.com/76cb/OpenTag-Station/blob/02a08697ec48765317b6955af2108e8385749982/docs/releasing.md).
 
+The candidate is `1.0.0`.
 
-The candidate is `1.0.0-rc.1`. `VERSION` is authoritative; generated manifests and
-documentation metadata must be refreshed from it. A successful build is not
-physical acceptance. Keep PR #32 open and unmerged until external signoff.
+## Steps
 
-## Acceptance record
+1. Set the version with `python tools/bump_version.py <version>` and add the changelog entry.
+   See [Contributing changes](pull-requests.md).
+2. Open a pull request, wait for CI to pass, and merge it to `main`. Do not push a tag.
+3. Check the published release and the installer page.
+4. Export this manual and publish it.
 
-Record reviewer, date, exact firmware SHA, board revision, service versions,
-result and sanitized evidence for every item. All boxes below are **pending**.
+## What the merge starts
 
-- [ ] Browser visual review: all 65 desktop/tablet/mobile captures and real browser flows.
-- [ ] WT32 physical visual, color, clipping and touch review of all five views.
-- [ ] Community catalog live download, search, import, and canonical Spoolman result.
-- [ ] Approved tag write and complete readback; reject a changed/unsupported tag.
-- [ ] Clear / Reuse and full blank verification, including reserved-tail preservation.
-- [ ] Spoolman UID/instance unlink verification; preserve usage and unrelated fields.
-- [ ] Rewrite after clear and successful identity resolution.
-- [ ] Explicit Weigh → Spoolman synchronization, default-off policy and conflict handling.
-- [ ] Prusa XL T1–T5 assignment, replacement confirmation and backend readback.
-- [ ] Scale calibration, repeatability, placement sensitivity and drift.
-- [ ] Short stability soak with NFC, scale, browser and touch active; record duration,
-      errors, heap and stack high-water marks. Agree duration before running.
-- [ ] Configuration backup/restore, Wi-Fi recovery and A/B rollback hardware matrix.
-- [ ] Final production-only USB flasher install and subsequent normal OTA update.
-- [ ] Documentation build guide reproduced and approved by an external builder.
+`release.yml` runs when a push to `main` changes `VERSION`:
 
-## Prepare the accepted commit
+| Job | What it does |
+|---|---|
+| `version` | Reads `VERSION` and checks whether the release `v<VERSION>` exists. A tag without a release stops the run. |
+| `validate` | Runs the `documentation`, `ui-review` and `firmware` jobs of `ci.yml` on that commit. |
+| `publish` | Verifies the files that run built and their checksums, and creates the GitHub release and its tag `v<VERSION>`, with the version's changelog section as its text. A version with a hyphen is a pre-release. |
+| `installer`, `deploy-installer` | Build the installer page from the release's own factory image and manifest and deploy it to <https://76cb.github.io/OpenTag-Station/>. |
 
-1. Complete the record above and link evidence in the PR. Do not check boxes based
-   on native tests or layout fixture renders.
-2. Change `VERSION` to `1.0.0` only after acceptance. Run
-   `python tools/release_version.py --sync-manifest` and
-   `python tools/export_docs.py --refresh` to refresh derived metadata.
-3. Update the changelog from pending to the accepted release date. Review the diff,
-   run complete CI, and require approval of the final exact commit.
-4. Merge only after the maintainer authorizes it. This PR update does not authorize merging.
-5. Tag the accepted main commit `v1.0.0` and push that tag. The production workflow
-   refuses prerelease tags, mismatched VERSION, dirty tracked sources and a
-   checkout different from the tagged commit.
-6. Confirm release files/checksums, source commit in the manifest and build metadata,
-   documentation version, and installer deployment. Do not substitute binaries
-   from an earlier CI run or a local working tree.
+The release and the installer therefore always carry the same build, and a failure stops
+everything after it. A push to `main` that does not change `VERSION` publishes nothing.
+To redeploy the installer, start `release.yml` by hand on `main` (Actions → Release → Run
+workflow); when the release already exists it only redeploys the installer from it.
 
-## Release workflow and rollback
+## Release files
 
-Ordinary main pushes update the installer but do not create releases. A `v*` tag
-starts full CI and then a fresh production build on that exact tag. Packaging
-includes the application binary for OTA, merged factory binary for USB, manifest,
-build metadata and SHA-256 checksums. There is no test-firmware distribution.
+| File | Use |
+|---|---|
+| `opentag-station-<version>-application.bin` | Update from the station's web page |
+| `opentag-station-factory.bin` | Full image used by the USB installer |
+| `manifest.json` | Installer manifest |
+| `build-metadata.json` | Version and source commit |
+| `SHA256SUMS` | Checksums of the files above |
 
-If validation fails, fix the source and choose a new appropriate version; do not
-silently move a published tag. Retain the prior known-good production release for
-USB recovery. OTA consumes the application binary, never the offset-zero factory image.
+## Publish the manual
+
+The manual is not published automatically. It is exported from the firmware repository and
+committed to <https://github.com/76cb/OpenTag-Station-Docs>, which deploys it.
+
+```sh
+python tools/export_docs.py --output <empty-directory>
+```
+
+The export copies `documentation-site/`, records the firmware version and commit, and points
+links to repository files at that commit. Copy the result into a clone of the Docs repository
+and commit it there.
