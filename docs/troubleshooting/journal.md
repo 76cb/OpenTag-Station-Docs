@@ -1,22 +1,71 @@
-# Recovery journal states
+# Finish an interrupted tag operation
 
-Complete the original operation using durable checkpoints.
+If a tag write or clear is interrupted — the tag moved, power was lost, Spoolman was offline —
+the station remembers where it stopped and offers to finish, even after a restart.
+Until then it will not start a write or clear on a different tag.
 
-## Before you start
+## What you see and what to do
 
-Preserved journal, original tag when physical recovery is needed, and original backend/field configuration.
+Open **MANAGE TAG** on the touchscreen (browser: **Manage tag**).
 
-## Steps
+| Touchscreen title | What it means | What to do |
+|---|---|---|
+| **Finish writing this tag** | A write stopped part-way. The tag may be half-written. | Put the **same** tag back on the reader and tap **FINISH WRITING**. |
+| **Finish clearing this tag** | A clear stopped part-way. | Put the **same** tag back and tap **FINISH CLEARING**. |
+| **Link not saved yet** | The tag is written and checked. Saving the link in Spoolman failed; the reason is shown. | Fix the reason, for example start Spoolman. Then tap **TRY SAVING LINK AGAIN**. The tag is not written again. |
+| **Unlink not finished** | The tag is erased. Removing its link in Spoolman failed. | Fix the reason, then tap **TRY UNLINKING AGAIN**. The tag does not need to be on the reader. |
 
-1. Read the reported phase before taking any action. Note whether physical work or remote cleanup is pending.
-2. For write/clear recovery, present the same original tag and request the offered inspection/preview.
-3. For association or unlink pending, restore backend access and use that explicit retry; cleanup-only unlink does not require NFC presence.
-4. Wait for verified completion and inspect the intended canonical association or its removal.
+In the browser the same situations look like this:
 
-## Expected result
+| Situation | Browser |
+|---|---|
+| Write interrupted | **Manage tag** shows the button **Resume tag workflow**. |
+| Link not saved | **Retry Spoolman link** or **Skip linking** in the tag dialog. |
+| Clear interrupted | The **Reuse this NFC tag?** dialog opens again. |
+| Unlink not finished | `Tag cleared · cleanup pending` with **Retry Spoolman cleanup** or **Skip cleanup**. In **Manage tag** the button reads **Retry cleanup**. |
 
-The matching physical target and required canonical cleanup complete, allowing normal operations again.
+## Messages that point here
 
-## If it fails
+| Message | What to do |
+|---|---|
+| `Another tag (…) has an unfinished write or clear. Place that tag on the reader to finish it first. If it is lost, choose Skip recovery on the Tag screen.` | Finish the tag named in the message first, or skip its recovery. |
+| `Retry pending association first` | Finish **Link not saved yet** first. |
+| `Retry pending unlink first` | Finish **Unlink not finished** first. |
+| `Finish Clear / Reuse recovery before another operation` | Finish **Finish clearing this tag** first. |
+| A message about Spoolman's tag list, for example `Spoolman already links this tag to spool #N. Remove it from that spool in Spoolman, then try again.` or `Spoolman still links this tag after removing it; try again` | Spoolman 0.27 or later holds a link that does not fit. See [Tag links in Spoolman's tag list](spoolman.md#tag-links-in-spoolmans-tag-list-spoolman-027-or-later), fix it in Spoolman, then retry. |
+| `Clearing this tag was interrupted and the Spoolman settings have changed since. Restore the earlier Spoolman settings to finish, or choose Skip recovery on the station's Tag screen.` | Set the Spoolman settings (address, extra field names) back to what they were when you started the clear, then finish. Or skip recovery. |
 
-Unknown/torn blocks, changed owner or changed configuration fail closed. Do not manually delete journal files or treat a surviving tag header as integrity proof. See [recovery model](../openprinttag/recovery.md).
+## Skip recovery
+
+Use this only when you cannot finish: the tag is lost or damaged, or the spool no longer exists
+in Spoolman.
+
+Touchscreen: tap the red **SKIP RECOVERY**, read the **Skip recovery?** screen,
+then tap **SKIP RECOVERY** again. **BACK** returns without skipping.
+Browser: **Skip linking** or **Skip cleanup**. An interrupted write or clear can only be skipped
+on the touchscreen.
+
+The station then stops trying and shows **Recovery skipped** with "Stopped. The tag keeps its
+current contents. Spoolman may already be partly updated; check the spool there. Read the tag again
+before using it."
+Skipping changes neither the tag nor Spoolman, so what is left depends on where it stopped:
+
+| You skipped | What is left behind | What to do afterwards |
+|---|---|---|
+| **Finish writing this tag** or **Finish clearing this tag** | The tag may be half-written. The station cannot finish it, and may not be able to write or clear it either. | Skip only if the tag is lost or damaged. If you still have it, place it again; discard it if the station says it can't be used. |
+| **Link not saved yet** | The tag is written, but Spoolman does not know it belongs to the spool. When the tag was being moved, the old spool may already have lost its link. | Link it later: **Manage tag → LINK TO A SPOOL** (browser: **Link to a spool**). |
+| **Unlink not finished** | The tag is erased, but Spoolman may still list it on the old spool. | In Spoolman, open the old spool, empty its `nfc_uid` and `opentag_instance_uuid` fields, and on Spoolman 0.27 or later remove the tag from its tag list. |
+
+## Good to know
+
+- An unfinished operation survives a restart.
+- A [factory reset or USB reinstall](recovery.md) forgets it. A half-written tag can then no longer
+  be finished.
+- To avoid interruptions, keep the tag on the reader until the screen says done.
+  While the tag is being written the screen shows `Keep the tag on the reader.` and a block counter.
+
+## Related
+
+- [Tag write or clear fails](write.md)
+- [Clear and reuse a tag](../daily-use/clear-reuse.md)
+- [Spoolman problems](spoolman.md)
