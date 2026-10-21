@@ -13,9 +13,10 @@ The station only writes to a tag that is completely blank or already holds OpenP
 A tag with a web link or other phone-written data shows `This tag can't be used as it is` and
 `Use a blank NXP ICODE SLIX2 tag.` The station cannot erase it for you.
 
-**Why does the station ignore my NTAG or MIFARE tag?**
-The reader only talks to NFC-V tags. Other types are not seen at all, so the touchscreen keeps
-showing `PLACE A TAG`.
+**Why does the station not read my NTAG or MIFARE tag?**
+The reader finds NFC-A tags (NTAG, MIFARE) and names them, `Tag type not supported yet`, but reads
+only NFC-V tags. Reading NTAG and MIFARE Classic spool tags is planned (issues #95 and #94).
+NFC-B and NFC-F tags are not seen at all, so the touchscreen keeps showing `PLACE A TAG`.
 
 **In the NFC READER setup step the reader says it is starting and never gets ready. Why?**
 The reader starts only after the station has joined your Wi-Fi and the setup network has closed.
@@ -71,11 +72,13 @@ See [What Spoolman 0.27 adds](../inventory/spoolman.md#what-spoolman-027-adds).
 Yes. FilaBridge is only needed to assign a spool to a printer toolhead.
 
 **Which printers work?**
-Toolhead assignment goes through FilaBridge, and the station shows toolheads T1 to T5.
-The manual covers the Prusa XL: [Set up FilaBridge for a Prusa XL](../printer/prusa-xl.md).
+Toolhead assignment goes through FilaBridge, so any printer FilaBridge supports can work. The
+station shows the toolheads FilaBridge reports: the touchscreen up to five, the web page all of them.
+Only the Prusa XL has been tested. The manual covers it: [Set up FilaBridge for a Prusa XL](../printer/prusa-xl.md).
 
 **Where is the Community filament catalog?**
-It is not part of this version.
+It was never part of a release and its code was removed in 1.0.1-beta.4. Choose filaments from
+your own Spoolman instead.
 
 ## Station
 
@@ -99,7 +102,7 @@ Touchscreen: **Settings → About / Advanced**. Browser: **Settings → Advanced
 **Is it open source?**
 The source is public under the PolyForm Noncommercial License 1.0.0. You may build and use it
 for noncommercial purposes. See
-[LICENSE.md](https://github.com/76cb/OpenTag-Station/blob/86ff2fd7a6f2717cdaeb40807cde1b0618378b29/LICENSE.md).
+[LICENSE.md](https://github.com/76cb/OpenTag-Station/blob/7ec0264070b5a21584e7727b72ea05cf2cee668c/LICENSE.md).
 
 **Where are the release files?**
 Releases are published on the [GitHub Releases page](https://github.com/76cb/OpenTag-Station/releases).

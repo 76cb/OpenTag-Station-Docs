@@ -1,7 +1,7 @@
 {
-  "version": "1.0.0",
+  "version": "1.0.1-beta.5",
   "source_repository": "76cb/OpenTag-Station",
-  "source_ref": "86ff2fd7a6f2717cdaeb40807cde1b0618378b29",
+  "source_ref": "7ec0264070b5a21584e7727b72ea05cf2cee668c",
   "acceptance": "pending",
-  "source_commit": "86ff2fd7a6f2717cdaeb40807cde1b0618378b29"
+  "source_commit": "7ec0264070b5a21584e7727b72ea05cf2cee668c"
 }

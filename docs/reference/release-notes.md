@@ -2,6 +2,151 @@
 
 What changed in each version of OpenTag Station, newest first.
 
+## 1.0.1-beta.5
+
+Pre-release for testers. First step of the tag-support roadmap (#93): the reader now also looks
+for ISO 14443A (NFC-A) tags and names them. Nothing is read from them yet. Not run on a WT32 by
+the author; see "Needs a station" below.
+
+**NFC**
+- **NTAG, MIFARE and other NFC-A tags are found and named.** Each poll cycle still asks for
+  NFC-V (ISO 15693) tags first, exactly as before. Only when that finds nothing, and no NFC-V tag
+  is being tracked, does the same cycle also run an ISO 14443A detection (REQA and anticollision).
+  So an OpenPrintTag is found and lost on the same polls as in 1.0.1-beta.4; the only added cost
+  is one short NFC-A request on cycles with no NFC-V tag.
+- An NFC-A tag is reported with its NFCID1, SAK and ATQA and a kind derived from the SAK (NXP
+  AN10833): `type2` (NTAG, MIFARE Ultralight), `mifare_classic`, `type4` or `other`. Nothing on
+  the tag is read, it is not looked up in Spoolman, and the automatic weigh does not start for it.
+- Touchscreen: Home shows "TAG FOUND" / "Tag type not supported yet" with the kind; the Tag page
+  shows the kind and the ID; the NFC READER setup step says "Tag found. Its type is not supported
+  yet." Browser: the Dashboard shows "Tag type not supported yet" / "Not supported yet", Manage
+  tag names the kind, and "Multiple NFC-A tags detected" when there are several.
+- API: `GET /api/v1/nfc` gains `technology` (`nfcv`, `nfca` or null) and, for an NFC-A tag, the
+  state `unsupported_technology`, lifecycle `UNSUPPORTED_TYPE`, the NFCID1 as `uid` and an `nfca`
+  object (`nfcid1`, `length`, `sak`, `atqa`, `kind`, `description`). `inventory.technology` now
+  names the technology of the tag on the reader.
+- The serial diagnostic line adds `technology=` and, for an NFC-A tag, its NFCID1, SAK, ATQA and
+  kind.
+- The production NFC check (`tools/check_production_nfc.py`) permits exactly three NFC-A RFAL
+  calls (mode switch, technology detection, collision resolution) in the I2C driver only, and
+  the ELF check now also fails if a Type 2 read or write, ISO-DEP or NFC-DEP routine is linked.
+
+**Needs a station**
+- Detection and removal timing of an OpenPrintTag before and after this change, and the
+  detection of an NTAG and a MIFARE Classic tag, have not been measured by the author. The
+  acceptance steps are in the pull request for this release and in issue #93.
+
+## 1.0.1-beta.4
+
+Pre-release for testers. The Community catalog is gone, and the leftovers from the 1.1 cleanup
+list that needed screenshots or a station are done. Nothing in this list has been run on a
+WT32 yet; see "Needs a station" below.
+
+**Removed**
+- **The Community filament catalog is deleted** (#86). It was disabled since 1.0.0-rc.9 and
+  never part of a release. Gone with it: the catalog service, its download and gzip decoder,
+  the writer's import actions (`community_*`, `import_preview`, `import`), the browser's
+  "Find in Community" source and Settings card, the touchscreen's **Community** choice, the
+  `OPENTAG_ENABLE_COMMUNITY` switch, the `native-community` test environment and the 2.4 MB
+  `community/community.pack`. The writer now rejects those actions as unknown. The factory
+  image still erases the filesystem (its part is now called `factory-littlefs.bin` and must
+  be empty), and a factory reset also deletes `/community.pack`, `/community.new` and
+  `/community.old` that a station flashed before 1.0.0-rc.9 may still hold.
+- **`POST /api/v1/nfc/read` is removed.** It always answered 503: the reader reads a tag when it
+  is placed. Use `GET /api/v1/nfc`.
+- Test-only settings code (`export_json`, `import_json`, `clear_spool_identity_mapping`) is
+  removed together with its tests.
+
+**Touchscreen**
+- **The Home WEIGH button only weighs.** It no longer turns into CALIBRATE or WRITE TAG. It is
+  disabled until the scale is calibrated, and the weight line then says "Scale not calibrated";
+  calibration lives on the Weigh page, writing a blank tag under Manage tag.
+- **The tag review shows the writer's other warnings**: an interrupted write that this write
+  completes, optional data not set in Spoolman ("Optional data not set: gtin, manufactured
+  date and 2 more"), and any other note the writer adds. Fields that will not be written were
+  already listed.
+- **Choosing a spool on the "Which spool is this?" page now shows "Linked to spool #N"** under
+  the tag until Spoolman confirms the link. A refused choice says the station is busy.
+- If the settings storage cannot be read, the Home screen says so and tells you to reinstall
+  the firmware with the USB installer; the browser shows the same message from `/health`.
+
+**Robustness**
+- **Tag writes and weight saves are refused while a restart is pending** (a reboot, factory
+  reset, firmware update or the health check of new firmware). This covers the automatic
+  weight save after a weigh. Only the catalog search stays available. The answer is "The
+  station is restarting, resetting or checking new firmware. Try again after it has restarted."
+- **A reset marker with an unreadable filesystem no longer reboots in a loop.** The station
+  stays up with storage failing closed and reports the problem instead of restarting into the
+  same recovery.
+- **Skipping a recovery names the tag.** `discard_recovery` now needs the tag's UID and is
+  refused for another tag ("This recovery belongs to tag ..."). The browser's clear dialog ends
+  in "Recovery skipped" with a Done button.
+- **`wifi.auto_reconnect: false` now opens the setup network after the first failed
+  connection.** Before, the station stopped trying but never opened it, because the failure
+  count it waits for could not be reached.
+
+**Docs**
+- The toolhead profile fields `nozzle_material` and `maximum_temperature_c` are stored for a
+  future compatibility check and have no visible effect yet.
+
+**Needs a station**
+- Everything above is covered by host tests and CI only. In particular: the refusal while a
+  restart is pending, the behaviour with an unreadable filesystem, the setup network with
+  `auto_reconnect: false`, and the Home button and tag review wording on the real screen.
+
+## 1.0.1-beta.3
+
+Pre-release for testers. Reliability fixes for rare cases; nothing changes in normal use.
+
+- **Settings survive a power cut during recovery.** If the main settings file was damaged and the
+  station restored them from its backup, saving the restored copy replaced the only good backup
+  first. A power cut at that moment lost the settings. Recovery now writes the main file and
+  leaves the backup alone.
+- **Clearing a tag works when Spoolman holds the spool's UUID in capitals.** The tag carries the
+  UUID in lower case, so the station refused to unlink with "Owner instance UUID changed". UUIDs
+  are compared without regard to case. A genuinely different UUID is still refused.
+- **A zero empty-spool weight on the spool no longer hides the filament's or vendor's weight.**
+  The tag now gets the first weight above 0 (spool, then filament, then vendor). A 0 is written
+  only when nothing is above 0, as before.
+- **A wrong value in Spoolman now names the field.** A weight, density or name that is negative or
+  the wrong type used to report "does not fit this tag". It now says which Spoolman field to
+  correct. "Does not fit this tag" remains for real lack of space.
+- **A flaky NFC reader no longer floods the browser.** Each NFC bus error triggered a refresh. The
+  count is still in the NFC data; it just no longer pushes updates.
+
+Not in this release: refusing writes and weight saves while a restart is pending (needs a station
+to test), and the screenshot-related items from the 1.1 cleanup list.
+
+## 1.0.1-beta.2
+
+Pre-release for testers. Internal cleanup; nothing changes for a user.
+
+- Removed code that only the tests used: the first-generation tag writer, the SPI bring-up for
+  the NFC chip, the shared-I2C diagnostic, an unused tag-presence state machine, the runtime task
+  table and the event queue. Their tests went with them. The code that reads and writes tags on a
+  station is unchanged.
+- The tag-protocol check (`check_production_nfc.py`) now fails if any of the removed files comes
+  back.
+- Removed two unused fields (`boot_started_ms_`, the Wi-Fi scan list in the diagnostics snapshot).
+- Documented that the reader driver has no host test.
+
+## 1.0.1-beta.1
+
+Pre-release for testers. The station no longer assumes a printer.
+
+**Printers are optional**
+- Without a FilaBridge address the station does tags, weighing and Spoolman only. The touchscreen
+  hides the **Assign** tab and button, and the Home screen keeps just **Weigh**, **Manage tag**
+  and **Settings**.
+- First-run setup skips the **Printer** step when no FilaBridge address is set, and counts its
+  steps to match ("Step 5 of 7" instead of "Step 5 of 8"). The FilaBridge step is marked optional.
+- Nothing changes for a station that already uses FilaBridge.
+
+**Known limits**
+- The touchscreen has room for five toolheads. A printer that reports more (for example a Core
+  One with INDX, up to eight) can be assigned from the browser only.
+- The browser interface still shows its printer sections when FilaBridge is not configured.
+
 ## 1.0.0
 
 The first release. Everything below is in it.

@@ -46,7 +46,7 @@ map entries, nesting depth at most 12. A tag outside these limits is reported as
 ## Fields the station writes
 
 A full write builds a new 312-byte image from the Spoolman spool. The mapping lives in
-[`spoolman_mapping.cpp`](https://github.com/76cb/OpenTag-Station/blob/86ff2fd7a6f2717cdaeb40807cde1b0618378b29/src/nfc/formats/openprinttag/spoolman_mapping.cpp).
+[`spoolman_mapping.cpp`](https://github.com/76cb/OpenTag-Station/blob/7ec0264070b5a21584e7727b72ea05cf2cee668c/src/nfc/formats/openprinttag/spoolman_mapping.cpp).
 
 | Region, key | Tag field | Source in Spoolman | Rule |
 |---|---|---|---|
@@ -59,7 +59,7 @@ A full write builds a new 312-byte image from the Spoolman spool. The mapping li
 | Main 6 | Brand-specific ID | Filament `article_number` | At most 16 bytes |
 | Main 16 | Nominal weight (g) | Filament `weight` | |
 | Main 17 | Actual initial weight (g) | Spool `initial_weight` | |
-| Main 18 | Empty spool weight (g) | Spool `spool_weight`, else filament `spool_weight`, else vendor `empty_spool_weight` | |
+| Main 18 | Empty spool weight (g) | Spool `spool_weight`, else filament `spool_weight`, else vendor `empty_spool_weight` | A value of 0 does not hide a greater value further down; it is written only when no source has a weight above 0 |
 | Main 29 | Density | Filament `density` | |
 | Main 61 | Diameter (µm) | Filament `diameter` × 1000 | Must be a whole number of micrometres, at most 65,535 |
 | Main 19 | Colour | Filament `color_hex` | 6 or 8 hex digits |
@@ -82,7 +82,8 @@ Errors that stop a write before any byte changes:
 | `Canonical used_weight is missing or invalid` | Spool has no valid `used_weight` |
 | `Spoolman diameter is not representable in integer micrometres` | Diameter is not a whole number of µm |
 | `Canonical filament color is malformed` | `color_hex` is not 6 or 8 hex digits |
-| `Canonical metadata does not fit this tag; no bytes written` | The encoded values need more space than the tag has, or a numeric field is negative, not finite or not a number, or a text field is not a string |
+| `Canonical metadata does not fit this tag; no bytes written` | The encoded values need more space than the tag has |
+| `Spoolman has an unusable <field> value (wrong type or negative); correct it in Spoolman. No bytes written` | A numeric field is negative, not finite or not a number, or a text field is not a string. `<field>` names it: filament name, vendor name, filament material, article number, filament weight, initial weight, spool weight or filament density |
 
 Not written: print and bed temperatures, price, location, lot number, comment.
 These stay in Spoolman.

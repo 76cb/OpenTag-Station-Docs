@@ -2,7 +2,7 @@
 
 How to prepare a change: what CI checks, and what the project expects by convention.
 The project is licensed under the PolyForm Noncommercial License 1.0.0
-([LICENSE.md](https://github.com/76cb/OpenTag-Station/blob/86ff2fd7a6f2717cdaeb40807cde1b0618378b29/LICENSE.md)).
+([LICENSE.md](https://github.com/76cb/OpenTag-Station/blob/7ec0264070b5a21584e7727b72ea05cf2cee668c/LICENSE.md)).
 
 ## Where things live
 
@@ -37,8 +37,8 @@ python tools/bump_version.py <new-version>
 ```
 
 It refuses a version that is not higher, then rewrites `VERSION`, `web-flasher/manifest.json`,
-`documentation-site/firmware.json` and the "The candidate is" line in `docs/releasing.md` and
-in [Release process](release.md). It reminds you if the changelog has no entry for the new
+`documentation-site/firmware.json` and the "The current version is" line in
+[Release process](release.md). It reminds you if the changelog has no entry for the new
 version.
 
 ## Changelog
@@ -71,7 +71,7 @@ with demo data. Each one is recorded with a hash of the sources it was made from
 `tools/check_committed_images.py` fails in CI when a source changed but the images did not.
 
 The sources are the `SOURCES` list in
-[`tools/curate_public_images.py`](https://github.com/76cb/OpenTag-Station/blob/86ff2fd7a6f2717cdaeb40807cde1b0618378b29/tools/curate_public_images.py).
+[`tools/curate_public_images.py`](https://github.com/76cb/OpenTag-Station/blob/7ec0264070b5a21584e7727b72ea05cf2cee668c/tools/curate_public_images.py).
 If your change touches one of them, regenerate the images:
 
 ```sh

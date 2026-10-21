@@ -55,6 +55,13 @@ More about versions and what the station reads and changes: [Connect Spoolman](.
 
 ## Connect FilaBridge and choose the printer (optional)
 
+Skip this section if you only want tags and weighing. With no FilaBridge address saved, the
+touchscreen has no **Assign** tab or button and setup has no **PRINTER** step. Saving an address
+later brings them back.
+
+The touchscreen shows up to five toolheads. The web page lists every toolhead FilaBridge reports,
+but that has not been tried on a printer with more than five.
+
 **Touchscreen** — the easier way, because it lists the printers for you:
 
 1. **Settings** → **Wi-Fi & services**, then **Next** to the **FILABRIDGE** step.

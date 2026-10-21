@@ -2,10 +2,22 @@
 
 A release is made by merging a version change to `main`. GitHub Actions builds, checks and
 publishes it, then updates the USB installer from the same files.
-The full checklist, including the tests on real hardware, is in
-[docs/releasing.md](https://github.com/76cb/OpenTag-Station/blob/86ff2fd7a6f2717cdaeb40807cde1b0618378b29/docs/releasing.md).
+Before a release, run the [hardware acceptance](testing.md#hardware-acceptance) checks on a real
+station.
 
-The candidate is `1.0.0`.
+The current version is `1.0.1-beta.5`.
+
+## Version names
+
+| Version | Meaning | Published as |
+|---|---|---|
+| `1.0.1-beta.1`, `1.0.1-beta.2` | Work in progress for a coming version. May lose data. For testers. | GitHub **pre-release** with a warning at the top. **Not** on the USB installer. |
+| `1.0.1-rc.1` | Release candidate: complete, being checked on hardware. Use only after the beta stage. | Same as a beta. |
+| `1.0.1` | Stable. Hardware acceptance done. | GitHub release and USB installer. |
+
+Any version with a hyphen is a pre-release. The public installer keeps installing the latest
+stable version until a stable one replaces it. Order is `beta` before `rc` before the plain
+version, and `bump_version.py` refuses a version that sorts lower than the current one.
 
 ## Steps
 
@@ -24,9 +36,9 @@ The candidate is `1.0.0`.
 | `version` | Reads `VERSION` and checks whether the release `v<VERSION>` exists. A tag without a release stops the run. |
 | `validate` | Runs the `documentation`, `ui-review` and `firmware` jobs of `ci.yml` on that commit. |
 | `publish` | Verifies the files that run built and their checksums, and creates the GitHub release and its tag `v<VERSION>`, with the version's changelog section as its text. A version with a hyphen is a pre-release. |
-| `installer`, `deploy-installer` | Build the installer page from the release's own factory image and manifest and deploy it to <https://76cb.github.io/OpenTag-Station/>. |
+| `installer`, `deploy-installer` | For a stable version only: build the installer page from the release's own factory image and manifest and deploy it to <https://76cb.github.io/OpenTag-Station/>. A pre-release skips both jobs. |
 
-The release and the installer therefore always carry the same build, and a failure stops
+For a stable version the release and the installer carry the same build, and a failure stops
 everything after it. A push to `main` that does not change `VERSION` publishes nothing.
 To redeploy the installer, start `release.yml` by hand on `main` (Actions → Release → Run
 workflow); when the release already exists it only redeploys the installer from it.
@@ -43,13 +55,21 @@ workflow); when the release already exists it only redeploys the installer from 
 
 ## Publish the manual
 
-The manual is not published automatically. It is exported from the firmware repository and
-committed to <https://github.com/76cb/OpenTag-Station-Docs>, which deploys it.
+The manual is published automatically. A merge to `main` that changes `documentation-site/`,
+`VERSION` or `tools/export_docs.py` runs the workflow **Publish manual**
+(`.github/workflows/docs-publish.yml`). It checks the manual, exports it, and pushes the export to
+<https://github.com/76cb/OpenTag-Station-Docs>, which deploys it. Pre-release versions are published
+too. The commit there is named `Manual for <version> from 76cb/OpenTag-Station@<commit>`; when
+nothing changed the workflow prints `Manual already up to date`.
+
+The export copies `documentation-site/`, records the firmware version and commit in `firmware.json`,
+and points links to repository files at that commit. To look at it without publishing:
 
 ```sh
 python tools/export_docs.py --output <empty-directory>
 ```
 
-The export copies `documentation-site/`, records the firmware version and commit, and points
-links to repository files at that commit. Copy the result into a clone of the Docs repository
-and commit it there.
+The workflow needs a credential for the Docs repository once, a fine-grained token in the secret
+`DOCS_PUBLISH_TOKEN` or a deploy key in the secret `DOCS_DEPLOY_KEY`; the setup is in the
+[documentation-site README](https://github.com/76cb/OpenTag-Station/blob/7ec0264070b5a21584e7727b72ea05cf2cee668c/documentation-site/README.md#publish).
+Until one of them exists, the workflow fails at its push step with `403` and nothing is published.
