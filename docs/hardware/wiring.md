@@ -155,6 +155,6 @@ You do not wire these. They are listed so you know which GPIOs are taken.
 | Display control | write GPIO47, command GPIO0, reset GPIO4, backlight GPIO45 |
 
 The pin numbers on this page come from the firmware's board definition
-[`wt32_sc01_plus_rev_a.hpp`](https://github.com/76cb/OpenTag-Station/blob/da8caa5c363a774df4c0ebe2094dd1fd623a190d/src/boards/wt32_sc01_plus_rev_a.hpp)
+[`wt32_sc01_plus_rev_a.hpp`](https://github.com/76cb/OpenTag-Station/blob/f55d8aebd160af64e6232da1e1ea7be617b24702/src/boards/wt32_sc01_plus_rev_a.hpp)
 and the scale driver
-[`nau7802_device.hpp`](https://github.com/76cb/OpenTag-Station/blob/da8caa5c363a774df4c0ebe2094dd1fd623a190d/src/hardware/scale/nau7802_device.hpp).
+[`nau7802_device.hpp`](https://github.com/76cb/OpenTag-Station/blob/f55d8aebd160af64e6232da1e1ea7be617b24702/src/hardware/scale/nau7802_device.hpp).
