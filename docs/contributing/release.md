@@ -71,5 +71,5 @@ python tools/export_docs.py --output <empty-directory>
 
 The workflow needs a credential for the Docs repository once, a fine-grained token in the secret
 `DOCS_PUBLISH_TOKEN` or a deploy key in the secret `DOCS_DEPLOY_KEY`; the setup is in the
-[documentation-site README](https://github.com/76cb/OpenTag-Station/blob/7ec0264070b5a21584e7727b72ea05cf2cee668c/documentation-site/README.md#publish).
+[documentation-site README](https://github.com/76cb/OpenTag-Station/blob/da8caa5c363a774df4c0ebe2094dd1fd623a190d/documentation-site/README.md#publish).
 Until one of them exists, the workflow fails at its push step with `403` and nothing is published.

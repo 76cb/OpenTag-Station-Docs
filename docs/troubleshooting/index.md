@@ -31,7 +31,7 @@ writes a tag, changes a setting or saves a weight.
 
 1. Install [Python 3](https://www.python.org/downloads/) on a computer on the same network as the
    station, if it is not there already.
-2. Download [`station_check.py`](https://github.com/76cb/OpenTag-Station/blob/7ec0264070b5a21584e7727b72ea05cf2cee668c/tools/station_check.py)
+2. Download [`station_check.py`](https://github.com/76cb/OpenTag-Station/blob/da8caa5c363a774df4c0ebe2094dd1fd623a190d/tools/station_check.py)
    (on that page: **Download raw file**).
 3. Close the station's web page in your browser, then run in a terminal, in the download folder:
 
