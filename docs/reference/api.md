@@ -5,7 +5,7 @@ The station serves a JSON API on its local network. The browser page uses the sa
 - Base URL: `http://<station>/api/v1` (`http://opentag-station.local/api/v1` with the default
   hostname). Plain HTTP only; there is no HTTPS listener.
 - The route table is `routes` in
-  [`src/web/api_router.hpp`](https://github.com/76cb/OpenTag-Station/blob/f55d8aebd160af64e6232da1e1ea7be617b24702/src/web/api_router.hpp).
+  [`src/web/api_router.hpp`](https://github.com/76cb/OpenTag-Station/blob/a2ac39b0b1cb210527150e6fbbee4674845ffb0b/src/web/api_router.hpp).
 - Paths are exact. A `?` or `#` in the path is rejected with `400 invalid_request`.
 
 ## Authentication
@@ -177,7 +177,7 @@ tag, with `field` (`name`, `vendor`, `material`, `material_type`, `article_numbe
 
 There is no route that writes raw tag memory. The values for `write` and `clear` come from the
 preceding preview in `GET /tag-writer`. Engine details:
-[tag-writer.md](https://github.com/76cb/OpenTag-Station/blob/f55d8aebd160af64e6232da1e1ea7be617b24702/docs/tag-writer.md).
+[tag-writer.md](https://github.com/76cb/OpenTag-Station/blob/a2ac39b0b1cb210527150e6fbbee4674845ffb0b/docs/tag-writer.md).
 
 ### Printer and toolheads
 

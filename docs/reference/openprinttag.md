@@ -46,7 +46,7 @@ map entries, nesting depth at most 12. A tag outside these limits is reported as
 ## Fields the station writes
 
 A full write builds a new 312-byte image from the Spoolman spool. The mapping lives in
-[`spoolman_mapping.cpp`](https://github.com/76cb/OpenTag-Station/blob/f55d8aebd160af64e6232da1e1ea7be617b24702/src/nfc/formats/openprinttag/spoolman_mapping.cpp).
+[`spoolman_mapping.cpp`](https://github.com/76cb/OpenTag-Station/blob/a2ac39b0b1cb210527150e6fbbee4674845ffb0b/src/nfc/formats/openprinttag/spoolman_mapping.cpp).
 
 | Region, key | Tag field | Source in Spoolman | Rule |
 |---|---|---|---|

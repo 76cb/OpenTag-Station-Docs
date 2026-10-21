@@ -19,7 +19,7 @@ does when the new firmware does not come up. Steps for doing an update:
 ## Flash layout
 
 16 MiB flash, from
-[`partitions.csv`](https://github.com/76cb/OpenTag-Station/blob/f55d8aebd160af64e6232da1e1ea7be617b24702/partitions.csv):
+[`partitions.csv`](https://github.com/76cb/OpenTag-Station/blob/a2ac39b0b1cb210527150e6fbbee4674845ffb0b/partitions.csv):
 
 | Partition | Offset | Size | Holds |
 |---|---|---:|---|

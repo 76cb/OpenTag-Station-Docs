@@ -2,7 +2,7 @@
 
 What runs on every pull request and on `main`, and how to run the same checks yourself.
 The workflow is
-[`.github/workflows/ci.yml`](https://github.com/76cb/OpenTag-Station/blob/f55d8aebd160af64e6232da1e1ea7be617b24702/.github/workflows/ci.yml).
+[`.github/workflows/ci.yml`](https://github.com/76cb/OpenTag-Station/blob/a2ac39b0b1cb210527150e6fbbee4674845ffb0b/.github/workflows/ci.yml).
 Set up the tools first: [Build from source](build.md).
 
 ## Test environments
@@ -252,7 +252,7 @@ check, a 40-request spool-list burst and the live-update connections.
     automated test covers it.
 32. Leave the station running with a browser open for at least an hour, placing and removing
     tags and weighing now and then. Watch the serial log (`health`, `stack_margin`,
-    `NFC owner=` lines; see [runtime-memory.md](https://github.com/76cb/OpenTag-Station/blob/f55d8aebd160af64e6232da1e1ea7be617b24702/docs/runtime-memory.md)): no restart, no steady fall
+    `NFC owner=` lines; see [runtime-memory.md](https://github.com/76cb/OpenTag-Station/blob/a2ac39b0b1cb210527150e6fbbee4674845ffb0b/docs/runtime-memory.md)): no restart, no steady fall
     of minimum free heap, no NFC bus errors, touchscreen and browser stay responsive.
 33. Check every touchscreen view for clipped text and unresponsive buttons, and the browser page
     on a desktop and a phone.
